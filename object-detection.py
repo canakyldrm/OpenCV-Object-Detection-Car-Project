@@ -4,7 +4,7 @@ windowName = "Output"
 cv2.namedWindow(windowName)
 thres = 0.5 # Threshold to detect object
 nms_threshold = 0.2 #(0.1 to 1) 1 means no suppress , 0.1 means high suppress
-cap = cv2.VideoCapture('highway-traffic_Trim2.mp4')
+cap = cv2.VideoCapture('highway-traffic.mp4')
 cap.set(cv2.CAP_PROP_FRAME_WIDTH,800) #width
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT,500) #height
 cap.set(cv2.CAP_PROP_BRIGHTNESS,150) #brightness
@@ -13,8 +13,7 @@ classNames = []
 with open('coco.names','r') as f:
     classNames = f.read().splitlines()
 
-#font = cv2.FONT_HERSHEY_PLAIN
-font = cv2.FONT_HERSHEY_COMPLEX
+font = cv2.FONT_HERSHEY_PLAIN
 Colors = np.random.uniform(0, 255, size=(len(classNames), 3))
 
 weightsPath = "frozen_inference_graph.pb"
@@ -47,7 +46,8 @@ while True:
             color = Colors[classIds[i][0]-1]
 
             x, y, w, h = box[0], box[1], box[2], box[3]
-
+            """
+            #Piksellerden elde edilen RGB değerlerinin ortalamasının alınması.
             r = 0
             g = 0
             b = 0
@@ -76,12 +76,9 @@ while True:
             g_ort = int(g_sum / len(g_l))
             b_ort = int(b_sum / len(b_l))
             print(r_ort, g_ort, b_ort)
-
-            cv2.rectangle(img, (x,y), (x+w,y+h), (r_ort, g_ort, b_ort), thickness=2)
-
-            cv2.putText(img, "color",(x-10,y-10),font,1,(r_ort, g_ort, b_ort),3)
-
-#           cv2.putText(img,str(round(confidence,2)),(box[0]+100,box[1]+30),font,1,colors[classId-1],2)
+            """
+            cv2.rectangle(img, (x,y), (x+w,y+h), color, thickness=2)
+            cv2.putText(img, "color",(x-10,y-10),font,1,color,3)
 
     cv2.imshow(windowName,img)
 
