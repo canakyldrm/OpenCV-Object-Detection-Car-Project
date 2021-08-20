@@ -1,0 +1,6 @@
+Python - 3.9
+Pycharm - Community Edition 2021.2
+
+Libraries
+opencv-python - 4.5.3.56 
+numpy - 1.19.5
